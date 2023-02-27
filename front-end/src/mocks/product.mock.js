@@ -64,7 +64,7 @@ const productMock = [
     name: 'Stella Artois 275ml',
     price: '3.49',
     url_image: 'http://localhost:3001/images/stella_artois_275ml.jpg',
-  }
+  },
 ];
 
 module.exports = productMock;
