@@ -1,5 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import isEmailValid from '../../utils/isEmailValid';
+
+const TWELVE = 12;
+const SIX = 6;
 
 function RegisterButton(props) {
   const { inputNameValue,

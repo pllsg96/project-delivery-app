@@ -32,7 +32,7 @@ function LoginButton(props) {
       </button>
       <button
         type="button"
-        data-testid="common_register__element-invalid_register"
+        data-testid="common_login__button-register"
         onClick={ () => {
           const { history } = props;
           history.push('/register');
