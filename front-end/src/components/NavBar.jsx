@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 
 function NavBar() {
   return (
@@ -21,11 +20,5 @@ function NavBar() {
     </nav>
   );
 }
-
-NavBar.propTypes = {
-  // setInputNameValue: PropTypes.func.isRequired,
-  // setInputEmailValue: PropTypes.func.isRequired,
-  // setInputPasswordValue: PropTypes.func.isRequired,
-};
 
 export default NavBar;
