@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import DeliveryAppContext from './DeliveryAppContext';
 
@@ -67,7 +66,7 @@ function DeliveryAppProvider({ children }) {
     }
   };
 
-  const contextValue = {
+  const contextValue = useMemo(() => ({
     cart,
     setCart,
     price,
@@ -75,7 +74,7 @@ function DeliveryAppProvider({ children }) {
     addItem,
     removeItem,
     changeItemByInput,
-  };
+  }), [cart, price]);
 
   return (
     <DeliveryAppContext.Provider value={ contextValue }>
