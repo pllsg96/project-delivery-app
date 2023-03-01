@@ -10,6 +10,11 @@ const suffix = {
   test: "-test",
 };
 
+console.log(process.env.MYSQL_HOST);
+console.log(process.env.MYSQL_PORT);
+console.log(process.env.MYSQL_DB_NAME);
+console.log(process.env.MYSQL_USER);
+
 const options = {
   host: process.env.HOSTNAME || process.env.MYSQL_HOST || 'localhost',
   port: process.env.MYSQL_PORT || '3306',
@@ -21,7 +26,7 @@ const options = {
   dialectOptions: {
     timezone: 'Z',
   },
-  logging: false,
+  logging: true,
 };
 
 module.exports = {
