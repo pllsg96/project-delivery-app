@@ -49,4 +49,16 @@ describe('Testa a página de login', () => {
     const { pathname } = history.location;
     expect(pathname).toBe('/register');
   });
+
+  it('Testa se o botão de login redireciona para a página de receitas', async () => {
+    const { history } = renderWithRouter(<App />);
+    const emailInput = screen.getByTestId(EMAIL_DATATESTID);
+    const passwordInput = screen.getByTestId(PASSWORD_DATATESTID);
+    const loginButton = screen.getByTestId(LOGIN_BUTTON_DATATESTID);
+    fireEvent.change(emailInput, { target: { value: 'fulana@deliveryapp.com' } });
+    fireEvent.change(passwordInput, { target: { value: '123456' } });
+    fireEvent.click(loginButton);
+    const { pathname } = history.location;
+    expect(pathname).toBe('/customer/products');
+  });
 });
