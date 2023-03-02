@@ -15,7 +15,7 @@ const serviceRegister = async (name, email, password) => {
   const userExist = await User.findOne({ where: { email } });
 
   if (userExist) {
-    return resFormat('User_Validation_Error', 401, `User with email: ${email} already exist`);
+    return resFormat('User_Validation_Error', 400, `User with email: ${email} already exist`);
   }
 
   const crypPassword = md5(password);
