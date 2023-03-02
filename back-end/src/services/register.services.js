@@ -7,7 +7,11 @@ const serviceRegister = async (name, email, password) => {
   const isNewUserValid = await validateRegister({ email, name, password });
 
   if (!isNewUserValid.valid) {
-    return { type: 'User_Validation_Error', statusCode: 400, message: isNewUserValid.message };
+    return { 
+      type: 'User_Validation_Error', 
+      statusCode: 400, 
+      message: { errMessage: isNewUserValid.message },
+    };
   }
 
   const crypPassword = md5(password);
