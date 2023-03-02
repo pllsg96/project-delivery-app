@@ -3,15 +3,19 @@ const { createToken } = require('../auth/jwt.auth');
 const { User } = require('../database/models');
 const { validateRegister } = require('./validations/registerValidations');
 
+const resFormat = (type, statusCode, message) => ({ type, statusCode, message });
+
 const serviceRegister = async (name, email, password) => {
   const isNewUserValid = await validateRegister({ email, name, password });
 
   if (!isNewUserValid.valid) {
-    return { 
-      type: 'User_Validation_Error', 
-      statusCode: 400, 
-      message: { errMessage: isNewUserValid.message },
-    };
+    return resFormat('User_Validation_Error', 400, { errMessage: isNewUserValid.message });
+  }
+
+  const userExist = await User.findOne({ where: { email } });
+
+  if (userExist) {
+    return resFormat('User_Validation_Error', 401, `User with email: ${email} already exist`);
   }
 
   const crypPassword = md5(password);
@@ -22,7 +26,7 @@ const serviceRegister = async (name, email, password) => {
     token: createToken({ name, email, role: 'customer' }),
   };
 
-  return { type: null, statusCode: 201, message: res };
+  return resFormat(null, 201, res);
 };
 
 module.exports = {
