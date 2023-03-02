@@ -6,8 +6,8 @@ const { validateRegister } = require('./validations/registerValidations');
 const serviceRegister = async (name, email, password) => {
   const isNewUserValid = await validateRegister({ email, name, password });
 
-  if(!isNewUserValid.valid) {
-    return { type: 'User_Validation_Error', statusCode: 400, message: isNewUserValid.message};
+  if (!isNewUserValid.valid) {
+    return { type: 'User_Validation_Error', statusCode: 400, message: isNewUserValid.message };
   }
 
   const crypPassword = md5(password);
