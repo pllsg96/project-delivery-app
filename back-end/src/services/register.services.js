@@ -15,7 +15,7 @@ const serviceRegister = async (name, email, password) => {
   await User.create({ name, email, password: crypPassword, role: 'customer' });
 
   const res = {
-    token: createToken({ name, email }),
+    token: createToken({ name, email, role: 'customer' }),
   };
 
   return { type: null, statusCode: 201, message: res };
