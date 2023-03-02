@@ -11,6 +11,7 @@ function App() {
     <DeliveryAppProvider>
       <Switch>
         <Route exact path="/" component={ LoginPage } />
+        <Route exact path="/login" component={ LoginPage } />
         <Route exact path="/register" component={ RegisterPage } />
         <Route exact path="/customer/products" component={ ProductsPage } />
       </Switch>
