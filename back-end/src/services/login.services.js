@@ -6,7 +6,7 @@ const login = async (data) => {
   const { email, password } = data;
 
   if (!email || !password) {
-    return { type: 'Error', statusCode: 400, message: 'Email and password are required!' };
+    return { type: 'Error', statusCode: 404, message: 'Email and password are required!' };
   }
 
   const encryptedPassword = md5(password);
@@ -14,7 +14,7 @@ const login = async (data) => {
   const user = await User.findOne({ where: { email, password: encryptedPassword } });
 
   if (!user) {
-    return { type: 'invalid_fields', statusCode: 400, message: 'Invalid fields' };
+    return { type: 'invalid_fields', statusCode: 404, message: 'Invalid fields' };
   }
 
   const createToken = authToken.createToken(user);

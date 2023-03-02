@@ -5,24 +5,47 @@ import DeliveryAppContext from './DeliveryAppContext';
 function DeliveryAppProvider({ children }) {
   const [cart, setCart] = useState([]);
   const [price, setPrice] = useState(0);
+  const [cartQuantity, setCartQuantity] = useState(0);
+
+  const setNewCart = (newCart) => {
+    const filtered = newCart.filter((item) => item.quantity !== 0);
+    localStorage.removeItem('cart');
+    localStorage.setItem('cart', JSON.stringify(filtered));
+    setCart(filtered);
+    const newQuantity = filtered.reduce((acc, item) => acc + item.quantity, 0);
+    setCartQuantity(newQuantity);
+  };
 
   const addItem = (item) => {
     const hasItem = cart.some((cartItem) => cartItem.id === item.id);
     if (!hasItem) {
       const itemWithQuantity = { ...item, quantity: 1 };
-      setCart([...cart, itemWithQuantity]);
-      localStorage.setItem('cart', JSON.stringify([...cart, itemWithQuantity]));
-      setPrice((+(price) + +(itemWithQuantity.price)).toFixed(2));
+      const newCart = [...cart, itemWithQuantity];
+      setCart(newCart);
+      const newQuantity = newCart.reduce((acc, cartItem) => acc + cartItem.quantity, 0);
+      setCartQuantity(newQuantity);
+      localStorage.setItem('cart', JSON.stringify(newCart));
+      let newPrice = 0;
+      newCart.forEach((cartItem) => {
+        newPrice += cartItem.price * cartItem.quantity;
+      });
+      setPrice(newPrice.toFixed(2));
     } else {
       const newCart = cart.map((cartItem) => {
         if (cartItem.id === item.id) {
-          return { ...cartItem, quantity: cartItem.quantity + 1 };
+          return { ...cartItem, quantity: +(cartItem.quantity) + 1 };
         }
         return cartItem;
       });
       setCart(newCart);
+      const newQuantity = newCart.reduce((acc, cartItem) => acc + cartItem.quantity, 0);
+      setCartQuantity(newQuantity);
       localStorage.setItem('cart', JSON.stringify(newCart));
-      setPrice((+(price) + +(item.price)).toFixed(2));
+      let newPrice = 0;
+      newCart.forEach((cartItem) => {
+        newPrice += cartItem.price * cartItem.quantity;
+      });
+      setPrice(newPrice.toFixed(2));
     }
   };
 
@@ -31,38 +54,58 @@ function DeliveryAppProvider({ children }) {
     if (product.quantity === 1) {
       const newCart = cart.filter((cartItem) => cartItem.id !== item.id);
       setCart(newCart);
+      const newQuantity = newCart.reduce((acc, cartItem) => acc + cartItem.quantity, 0);
+      setCartQuantity(newQuantity);
       localStorage.setItem('cart', JSON.stringify(newCart));
-      setPrice((+(price) - +(item.price)).toFixed(2));
+      let newPrice = 0;
+      newCart.forEach((cartItem) => {
+        newPrice += cartItem.price * cartItem.quantity;
+      });
+      setPrice(newPrice.toFixed(2));
     } else {
       const newCart = cart.map((cartItem) => {
         if (cartItem.id === item.id) {
-          return { ...cartItem, quantity: cartItem.quantity - 1 };
+          return { ...cartItem, quantity: +(cartItem.quantity) - 1 };
         }
         return cartItem;
       });
       setCart(newCart);
       localStorage.setItem('cart', JSON.stringify(newCart));
-      setPrice((+(price) - +(item.price)).toFixed(2));
+      const newQuantity = newCart.reduce((acc, cartItem) => acc + cartItem.quantity, 0);
+      setCartQuantity(newQuantity);
+      let newPrice = 0;
+      newCart.forEach((cartItem) => {
+        newPrice += cartItem.price * cartItem.quantity;
+      });
+      setPrice(newPrice.toFixed(2));
     }
   };
 
   const changeItemByInput = (item, quantity) => {
     const product = cart.find((cartItem) => cartItem.id === item.id);
-    if (quantity === 0) {
-      const newCart = cart.filter((cartItem) => cartItem.id !== item.id);
-      setCart(newCart);
+    if (!product) {
+      const newCart = [...cart, { ...item, quantity: +quantity }];
+      setNewCart(newCart);
       localStorage.setItem('cart', JSON.stringify(newCart));
-      setPrice(price - (product.price * product.quantity));
+      let newPrice = 0;
+      newCart.forEach((cartItem) => {
+        newPrice += cartItem.price * cartItem.quantity;
+      });
+      setPrice(newPrice.toFixed(2));
     } else {
       const newCart = cart.map((cartItem) => {
         if (cartItem.id === item.id) {
-          return { ...cartItem, quantity };
+          return { ...cartItem, quantity: +quantity };
         }
         return cartItem;
       });
-      setCart(newCart);
+      setNewCart(newCart);
       localStorage.setItem('cart', JSON.stringify(newCart));
-      setPrice(cart.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0));
+      let newPrice = 0;
+      newCart.forEach((cartItem) => {
+        newPrice += cartItem.price * cartItem.quantity;
+      });
+      setPrice(newPrice.toFixed(2));
     }
   };
 
@@ -74,7 +117,10 @@ function DeliveryAppProvider({ children }) {
     addItem,
     removeItem,
     changeItemByInput,
-  }), [cart, price]);
+    cartQuantity,
+    setCartQuantity,
+  }), [cart,
+    price, cartQuantity]);
 
   return (
     <DeliveryAppContext.Provider value={ contextValue }>

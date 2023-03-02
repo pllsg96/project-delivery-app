@@ -7,7 +7,7 @@ const register = async (req, res) => {
     if (result.type) {
       return res.status(result.statusCode).send(result.message);
     }
-    res.status(result.statusCode).send(result.message);
+    res.status(result.statusCode).send({ result: result.message });
   } catch (error) {
     res.status(500).send(error);
   }

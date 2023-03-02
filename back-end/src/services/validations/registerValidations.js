@@ -12,9 +12,10 @@ const validateRegister = (user) => {
 
   if (fieldsError) return fieldsError;
 
-  const validEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i.test(email);
+  const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i;
+  const emailTest = emailRegex.test(email);
 
-  if (!validEmail || name.length < 12 || password.length < 6) {
+  if (!emailTest || name.length < 12 || password.length < 6) {
     return { valid: false, message: 'Wrong Fields Formats' };
   }
 

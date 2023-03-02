@@ -5,13 +5,15 @@ import DeliveryAppContext from '../context/DeliveryAppContext';
 import CheckoutButton from '../components/ProductComponents/CheckoutButton';
 
 function ProductsPage() {
-  const { setCart, setPrice } = useContext(DeliveryAppContext);
+  const { setCart, setPrice, setCartQuantity } = useContext(DeliveryAppContext);
 
   useEffect(() => {
     const cartStorage = JSON.parse(localStorage.getItem('cart'));
     if (cartStorage) {
-      setCart(cartStorage);
+      const filtered = cartStorage.filter((item) => item.quantity !== 0);
+      setCart(filtered);
       setPrice(cartStorage.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0));
+      setCartQuantity(cartStorage.reduce((acc, curr) => acc + curr.quantity, 0));
     }
   }, []);
 

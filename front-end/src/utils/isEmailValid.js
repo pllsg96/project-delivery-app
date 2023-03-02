@@ -1,5 +1,5 @@
 const validateEmail = (email) => {
-  const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+  const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i;
   const emailTest = emailRegex.test(email);
   return emailTest;
 };

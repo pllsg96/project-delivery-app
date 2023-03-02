@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import DeliveryAppContext from '../../context/DeliveryAppContext';
 
 function CheckoutButton() {
-  const { price, cart } = useContext(DeliveryAppContext);
+  const { price, cartQuantity } = useContext(DeliveryAppContext);
 
   return (
     <button
@@ -13,7 +13,7 @@ function CheckoutButton() {
       <p
         data-testid="customer_products__checkout-bottom-value"
       >
-        { cart.length > 0 && cart.length }
+        { cartQuantity > 0 && cartQuantity }
         {' '}
         Ver Carrinho: R$
         {' '}

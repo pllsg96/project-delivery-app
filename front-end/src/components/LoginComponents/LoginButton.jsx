@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import isEmailValid from '../../utils/isEmailValid';
@@ -6,7 +6,13 @@ import isEmailValid from '../../utils/isEmailValid';
 const SIX = 6;
 
 function LoginButton(props) {
+  const [disabled, setDisabled] = useState(true);
   const { email, password, setError, history } = props;
+
+  useEffect(() => {
+    if (isEmailValid(email) && password.length >= SIX) setDisabled(false);
+    else setDisabled(true);
+  }, [email, password]);
 
   const handleSubmit = async () => {
     setError('');
@@ -28,6 +34,7 @@ function LoginButton(props) {
       <button
         type="button"
         data-testid="common_login__button-login"
+        disabled={ disabled }
         onClick={ () => handleSubmit() }
       >
         Entrar

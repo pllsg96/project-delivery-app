@@ -5,8 +5,9 @@ const { validateRegister } = require('./validations/registerValidations');
 
 const resFormat = (type, statusCode, message) => ({ type, statusCode, message });
 
-const serviceRegister = async (name, email, password) => {
-  const isNewUserValid = await validateRegister({ email, name, password });
+const serviceRegister = async (body) => {
+  const { email, name, password } = body;
+  const isNewUserValid = validateRegister({ email, name, password });
 
   if (!isNewUserValid.valid) {
     return resFormat('User_Validation_Error', 400, { errMessage: isNewUserValid.message });
@@ -15,8 +16,8 @@ const serviceRegister = async (name, email, password) => {
   const userExist = await User.findOne({ where: { email } });
 
   if (userExist) {
-    return resFormat('User_Validation_Error', 400, `User with email: ${email} already exist`);
-  }
+    return resFormat('User_Validation_Error', 409, `User with email: ${email} already exist`);
+  } 
 
   const crypPassword = md5(password);
   
