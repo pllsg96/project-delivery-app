@@ -4,12 +4,10 @@ require('dotenv').config();
 
 const jwtSecretPath = path.join(__dirname, '../../jwt.evaluation.key');
 
-const jwtSecret = require("fs")
-  .readFileSync(jwtSecretPath, { encoding: "utf-8" });
-
+const jwtSecret = require('fs')
+  .readFileSync(jwtSecretPath, { encoding: 'utf-8' });
 
 const createToken = (user) => {
-  console.log(__dirname);
   const header = {
     expiresIn: '1d',
     algorithm: 'HS256',
