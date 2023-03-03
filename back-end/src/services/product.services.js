@@ -1,4 +1,4 @@
-const { Product } = require('../database/models/Product.model');
+const { Product } = require('../database/models');
 
 const getAll = async () => {
   const products = await Product.findAll();
