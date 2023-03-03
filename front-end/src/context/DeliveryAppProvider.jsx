@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import DeliveryAppContext from './DeliveryAppContext';
 
@@ -16,7 +16,7 @@ function DeliveryAppProvider({ children }) {
     setCartQuantity(newQuantity);
   };
 
-  const addItem = (item) => {
+  const addItem = useCallback((item) => {
     const hasItem = cart.some((cartItem) => cartItem.id === item.id);
     if (!hasItem) {
       const itemWithQuantity = { ...item, quantity: 1 };
@@ -47,9 +47,9 @@ function DeliveryAppProvider({ children }) {
       });
       setPrice(newPrice.toFixed(2));
     }
-  };
+  }, [cart]);
 
-  const removeItem = (item) => {
+  const removeItem = useCallback((item) => {
     const product = cart.find((cartItem) => cartItem.id === item.id);
     if (product.quantity === 1) {
       const newCart = cart.filter((cartItem) => cartItem.id !== item.id);
@@ -79,9 +79,9 @@ function DeliveryAppProvider({ children }) {
       });
       setPrice(newPrice.toFixed(2));
     }
-  };
+  }, [cart]);
 
-  const changeItemByInput = (item, quantity) => {
+  const changeItemByInput = useCallback((item, quantity) => {
     const product = cart.find((cartItem) => cartItem.id === item.id);
     if (!product) {
       const newCart = [...cart, { ...item, quantity: +quantity }];
@@ -107,7 +107,7 @@ function DeliveryAppProvider({ children }) {
       });
       setPrice(newPrice.toFixed(2));
     }
-  };
+  }, [cart]);
 
   const contextValue = useMemo(() => ({
     cart,
@@ -119,12 +119,12 @@ function DeliveryAppProvider({ children }) {
     changeItemByInput,
     cartQuantity,
     setCartQuantity,
-  }), [cart,
-    price, cartQuantity]);
+  }), [cart, price, cartQuantity,
+    setCart, setPrice, addItem, removeItem, changeItemByInput, setCartQuantity]);
 
   return (
     <DeliveryAppContext.Provider value={ contextValue }>
-      { children }
+      {children}
     </DeliveryAppContext.Provider>
   );
 }

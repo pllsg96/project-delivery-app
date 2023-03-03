@@ -3,21 +3,21 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import isEmailValid from '../../utils/isEmailValid';
 
-const SIX = 6;
+const MIN_LENGTH_PASSWORD = 6;
 
 function LoginButton(props) {
   const [disabled, setDisabled] = useState(true);
   const { email, password, setError, history } = props;
 
   useEffect(() => {
-    if (isEmailValid(email) && password.length >= SIX) setDisabled(false);
+    if (isEmailValid(email) && password.length >= MIN_LENGTH_PASSWORD) setDisabled(false);
     else setDisabled(true);
   }, [email, password]);
 
   const handleSubmit = async () => {
     setError('');
     if (!isEmailValid(email)) setError('Email inválido!');
-    else if (password.length < SIX) setError('Senha inválida!');
+    else if (password.length < MIN_LENGTH_PASSWORD) setError('Senha inválida!');
     else {
       try {
         const { data } = await axios.post('http://localhost:3001/login', { email, password });

@@ -15,7 +15,7 @@ function ProductsPage() {
       setPrice(cartStorage.reduce((acc, curr) => acc + (curr.price * curr.quantity), 0));
       setCartQuantity(cartStorage.reduce((acc, curr) => acc + curr.quantity, 0));
     }
-  }, []);
+  }, [setCart, setPrice, setCartQuantity]);
 
   return (
     <>
