@@ -14,7 +14,7 @@ function RegisterPage(props) {
 
   return (
     <div>
-      <form action="">
+      <form>
         <RegisterForm
           setInputNameValue={ setInputNameValue }
           setInputEmailValue={ setInputEmailValue }
