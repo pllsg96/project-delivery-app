@@ -6,15 +6,15 @@ const validateToken = (req, res, next) => {
 
   if (!token) return res.status(401).send({ message: 'Token not found' });
 
-  jwt.verify(token, jwtSecret, function(err, _decoded) {
-    if (err) return res.status(401).send({ message: 'Invalid Token' });
-    
-    return next();
-  });
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(401).send({ message: 'Invalid Token' });
+  }
 };
 
 module.exports = {
-  validateLogin,
-  validateRegister,
   validateToken,
 };
