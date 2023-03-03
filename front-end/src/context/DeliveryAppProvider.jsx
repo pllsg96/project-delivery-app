@@ -51,6 +51,7 @@ function DeliveryAppProvider({ children }) {
 
   const removeItem = useCallback((item) => {
     const product = cart.find((cartItem) => cartItem.id === item.id);
+    if (!product) return;
     if (product.quantity === 1) {
       const newCart = cart.filter((cartItem) => cartItem.id !== item.id);
       setCart(newCart);

@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function NavBar() {
+  const user = JSON.parse(localStorage.getItem('user'));
   return (
     <nav>
       <ul>
@@ -11,11 +13,15 @@ function NavBar() {
           Meus pedidos
         </li>
         <li data-testid="customer_products__element-navbar-user-full-name">
-          Nome do usuário
+          {user.name}
         </li>
-        <li data-testid="customer_products__element-navbar-link-logout">
+        <Link
+          to="/"
+          data-testid="customer_products__element-navbar-link-logout"
+          onClick={ () => localStorage.clear() }
+        >
           Sair
-        </li>
+        </Link>
       </ul>
     </nav>
   );

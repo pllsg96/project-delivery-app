@@ -33,7 +33,7 @@ function ProductQuantity(props) {
           quantity = target.value;
           changeItemByInput(product, quantity);
         } }
-        data-testid={ `customer_products__input-card-quantity-${product.id} ` }
+        data-testid={ `customer_products__input-card-quantity-${product.id}` }
       />
       <button
         type="button"
@@ -51,7 +51,6 @@ ProductQuantity.propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    url_image: PropTypes.string.isRequired,
   }).isRequired,
 };
 
