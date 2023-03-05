@@ -5,11 +5,11 @@ const login = async (req, res) => {
     const { body } = req;
     const result = await services(body);
     if (result.type) {
-      return res.status(result.statusCode).send(result.message);
+      return res.status(result.statusCode).json(result.message);
     }
-    res.status(result.statusCode).send(result.message);
+    res.status(result.statusCode).json(result.message);
   } catch (error) {
-    res.status(400).send(error);
+    res.status(404).json(error);
   }
 };
 

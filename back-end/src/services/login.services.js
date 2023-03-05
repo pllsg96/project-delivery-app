@@ -4,16 +4,15 @@ const authToken = require('../auth/jwt.auth');
 
 const login = async (data) => {
   const { email, password } = data;
-
-  if (!email || !password) {
-    return { type: 'Error', statusCode: 404, message: 'Email and password are required!' };
-  }
-
-  const encryptedPassword = md5(password);
-
-  const user = await User.findOne({ where: { email, password: encryptedPassword } });
+  const user = await User.findOne({ where: { email } });
 
   if (!user) {
+    return { type: 'invalid_fields', statusCode: 404, message: 'Invalid fields' };
+  }
+  
+  const encryptedPassword = md5(password);
+
+  if (user.password !== encryptedPassword) {
     return { type: 'invalid_fields', statusCode: 404, message: 'Invalid fields' };
   }
 
