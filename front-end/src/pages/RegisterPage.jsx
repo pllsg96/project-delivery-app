@@ -8,7 +8,7 @@ function RegisterPage() {
   const [inputNameValue, setInputNameValue] = useState('');
   const [inputEmailValue, setInputEmailValue] = useState('');
   const [inputPasswordValue, setInputPasswordValue] = useState('');
-  const [error] = useState(false);
+  const [error, setError] = useState(false);
   const history = useHistory();
 
   const validateEmail = (emailToValidate) => {
@@ -61,7 +61,7 @@ function RegisterPage() {
       history.push('/customer/products');
     }
 
-    if (response.status === statusCode.CONFLICT) {
+    if (status === statusCode.CONFLICT) {
       setError(true);
     }
   };
