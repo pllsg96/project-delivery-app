@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import loginRequisition from '../services/loginAPI';
+import fetchAPI from '../services/fetchAPI';
 import statusCode from '../utils/statusCode';
 
 function LoginPage() {
@@ -24,7 +24,7 @@ function LoginPage() {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    const response = await loginRequisition(email, password);
+    const response = await fetchAPI.loginRequisition(email, password);
     const { status } = response;
 
     if (status === statusCode.NOT_FOUND) {
