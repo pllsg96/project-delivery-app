@@ -1,5 +1,10 @@
+const STANDARD_PORT = 3001;
+const HOST = process.env.REACT_APP_HOSTNAME || 'localhost';
+const PORT = process.env.REACT_APP_BACKEND_PORT || STANDARD_PORT;
+const URL = `http://${HOST}:${PORT}`;
+
 const loginRequisition = async (email, password) => {
-  const response = await fetch('http://localhost:3001/login', {
+  const response = await fetch(`${URL}/login`, {
     method: 'POST',
     headers: {
       Accept: 'application/json, text/plain, */*',
@@ -13,7 +18,7 @@ const loginRequisition = async (email, password) => {
 };
 
 const registerRequisition = async (name, email, password) => {
-  const response = await fetch('http://localhost:3001/register', {
+  const response = await fetch(`${URL}/register`, {
     method: 'POST',
     headers: {
       Accept: 'application/json, text/plain, */*',
