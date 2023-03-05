@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import loginRequisition from '../services/loginAPI';
+import statusCode from '../utils/statusCode';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -22,11 +23,14 @@ function LoginPage() {
 
   const handleLogin = async () => {
     const response = await loginRequisition(email, password);
-    if (response === 'Invalid fields') {
+    const { status } = response;
+    if (status === statusCode.NOT_FOUND) {
       setError(true);
-    } else {
+    } else if (status === statusCode.OK) {
       localStorage.setItem('user', JSON.stringify(response));
       history.push('/customer/products');
+    } else {
+      setError(true);
     }
   };
 

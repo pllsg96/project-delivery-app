@@ -1,15 +1,15 @@
-import api from '../lib/axios';
-import statusCode from '../utils/statusCode';
-
 const loginRequisition = async (email, password) => {
-  try {
-    const { data } = await api.post('/login', { email, password });
-    return data;
-  } catch (error) {
-    if (error.response.status === statusCode.NOT_FOUND) {
-      return error.response.data;
-    }
-  }
+  const response = await fetch('http://localhost:3001/login', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  return response;
 };
 
 export default loginRequisition;
