@@ -21,9 +21,12 @@ function LoginPage() {
     return isValidate;
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
     const response = await loginRequisition(email, password);
     const { status } = response;
+
     if (status === statusCode.NOT_FOUND) {
       setError(true);
     } else if (status === statusCode.OK) {
@@ -72,7 +75,7 @@ function LoginPage() {
         </label>
 
         <button
-          type="button"
+          type="submit"
           data-testid="common_login__button-login"
           disabled={ !validateEmail(email) || !validatePassword(password) }
           onClick={ handleLogin }
