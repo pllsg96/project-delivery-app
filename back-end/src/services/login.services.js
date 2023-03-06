@@ -1,6 +1,6 @@
 const md5 = require('md5');
 const { User } = require('../database/models');
-const authToken  = require('../auth/jwt.auth');
+const authToken = require('../auth/jwt.auth');
 
 const login = async (data) => {
   const { email, password } = data;
