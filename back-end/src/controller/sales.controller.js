@@ -1,12 +1,12 @@
 const service = require('../services/sales.services');
 
 const create = async (req, res) => {
- try {
-   const { userId, sellerId, deliveryAddress, deliveryNumber, products } = req.body;
-   const sale = await service
-   .create({ userId, sellerId, deliveryAddress, deliveryNumber, products });
-   res.status(201).json(sale);
- } catch (err) {
+  try {
+    const { userId, sellerId, deliveryAddress, deliveryNumber, products } = req.body;
+    const sale = await service
+    .create({ userId, sellerId, deliveryAddress, deliveryNumber, products });
+    res.status(201).json(sale);
+  } catch (err) {
     res.status(400).json({ message: err.message });
   }
 }; 

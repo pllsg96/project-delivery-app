@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      tableName: "sale_product",
+      tableName: "sales_products",
     }
   );
 

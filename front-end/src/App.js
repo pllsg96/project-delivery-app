@@ -3,6 +3,8 @@ import { useLocation, useHistory, Switch, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProductsPage from './pages/ProductsPage';
+import CheckoutPage from './pages/CheckoutPage';
+import ClientOrdersPage from './pages/ClientOrdersPage';
 import DeliveryAppProvider from './context/DeliveryAppProvider';
 import './App.css';
 
@@ -22,7 +24,8 @@ function App() {
         <Route exact path="/login" component={ LoginPage } />
         <Route exact path="/register" component={ RegisterPage } />
         <Route exact path="/customer/products" component={ ProductsPage } />
-        <Route exact path="/customer/checkout" component={ ProductsPage } />
+        <Route exact path="/customer/checkout" component={ CheckoutPage } />
+        <Route exact path="/customer/orders" component={ ClientOrdersPage } />
       </Switch>
     </DeliveryAppProvider>
   );
