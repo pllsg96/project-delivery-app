@@ -2,7 +2,7 @@ version: '3.9'
 services: 
   database:
     image: mysql:latest
-    container_name: database
+    container_name: delivery-app-dev
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
