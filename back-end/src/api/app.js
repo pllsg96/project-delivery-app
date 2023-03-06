@@ -5,6 +5,7 @@ const cors = require('cors');
 const loginRoutes = require('../routes/login.routes');
 const registerRoutes = require('../routes/register.routes');
 const productsRoutes = require('../routes/product.routes');
+const salesRouter = require('../routes/sales.routes');
 
 app.use(express.json());
 app.use(cors());
@@ -21,5 +22,7 @@ app.use('/login', loginRoutes);
 app.use('/register', registerRoutes);
 
 app.use('/products', productsRoutes);
+
+app.use('/', salesRouter);
 
 module.exports = app;
