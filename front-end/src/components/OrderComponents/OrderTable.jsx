@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function OrderTable() {
+function OrderTable({ order }) {
   return (
     // < className="order-wrap">
     <table>
@@ -24,16 +25,32 @@ function OrderTable() {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>a</td>
-          <td>b</td>
-          <td>c</td>
-          <td>d</td>
-          <td>e</td>
-        </tr>
+        {
+          order.products.map((product, index) => (
+            <tr key={ index }>
+              <td>{index}</td>
+              <td>{product.name}</td>
+              <td>{product.quantity}</td>
+              <td>{product.price}</td>
+              <td>{Number(product.quantity * product.price).toFixed(2)}</td>
+            </tr>
+          ))
+        }
       </tbody>
     </table>
   );
 }
+
+OrderTable.propTypes = {
+  order: PropTypes.shape({
+    products: PropTypes.shape([{
+      id: PropTypes.number,
+      name: PropTypes.string,
+      price: PropTypes.string,
+      quantity: PropTypes.number,
+      urlImage: PropTypes.string,
+    }]),
+  }).isRequired,
+};
 
 export default OrderTable;

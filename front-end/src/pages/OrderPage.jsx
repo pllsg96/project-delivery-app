@@ -28,7 +28,9 @@ function OrderPage() {
           <OrderHeader
             order={ data.data }
           />
-          <OrderTable />
+          <OrderTable
+            order={ data.data }
+          />
         </div>
       )}
     </div>

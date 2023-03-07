@@ -24,9 +24,9 @@ const create = async (body) => {
   );
   const saleId = sale.id;
     const salesProducts = products.map(({ id, quantity }) => ({ saleId, productId: id, quantity }));
-   await SaleProduct.bulkCreate(salesProducts, { transaction: t });
-   await t.commit();
-   return sale;
+    await SaleProduct.bulkCreate(salesProducts, { transaction: t });
+    await t.commit();
+    return sale;
   } catch (err) {
     await t.rollback();
     return { type: 'Create_Error', statusCode: 400, message: err.message };
