@@ -45,16 +45,41 @@ const getAll = async (id, role) => {
     return sales;
 };
 
+const formatSale = (saleProduct) => {
+  const products = saleProduct.map(({ product, quantity }) => ({
+    id: product.id,
+    name: product.name,
+    quantity,
+    price: product.price,
+    urlImage: product.urlImage,
+  }));
+
+  const sale = {
+    id: saleProduct[0].sale.id,
+    userId: saleProduct[0].sale.userId,
+    sellerId: saleProduct[0].sale.sellerId,
+    totalPrice: saleProduct[0].sale.totalPrice,
+    deliveryAddress: saleProduct[0].sale.deliveryAddress,
+    deliveryNumber: saleProduct[0].sale.deliveryNumber,
+    status: saleProduct[0].sale.status,
+    saleDate: saleProduct[0].sale.saleDate,
+  };
+
+  return { ...sale, products };
+};
+
 const getById = async (id) => {
-  const sale = await SaleProduct.findAll({
+  const saleProduct = await SaleProduct.findAll({
     where: { saleId: id },
     include: ['product', 'sale'],
   });
 
-  if (!sale) {
+  if (!saleProduct) {
     return null;
   }
 
+  const sale = formatSale(saleProduct);
+ 
   return sale;
 };
 
