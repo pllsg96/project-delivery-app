@@ -18,29 +18,18 @@ const create = async (body) => {
   try {
     const { userId, sellerId, deliveryAddress, deliveryNumber, products } = body;
     const totalPrice = calculateTotalPrice(products);
-
-    const sale = await Sale
-    .create({
-      userId,
-      sellerId,
-      totalPrice,
-      deliveryAddress,
-      deliveryNumber,
-      status: 'Pedido Recebido',
-    }, { transaction: t });
-
-    const saleId = sale.id;
-
+  const sale = await Sale.create(
+    { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status: 'Pedido Recebido',
+    }, { transaction: t },
+  );
+  const saleId = sale.id;
     const salesProducts = products.map(({ id, quantity }) => ({ saleId, productId: id, quantity }));
-
-    await SaleProduct.bulkCreate(salesProducts, { transaction: t });
-
-    await t.commit();
-
-    return sale;
+   await SaleProduct.bulkCreate(salesProducts, { transaction: t });
+   await t.commit();
+   return sale;
   } catch (err) {
     await t.rollback();
-    throw err;
+    return { type: 'Create_Error', statusCode: 400, message: err.message };
   }
 };
 
