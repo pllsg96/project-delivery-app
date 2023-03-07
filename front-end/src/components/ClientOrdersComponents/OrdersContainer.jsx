@@ -20,8 +20,8 @@ OrdersContainer.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       status: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      date: PropTypes.string.isRequired,
+      totalPrice: PropTypes.string.isRequired,
+      saleDate: PropTypes.string.isRequired,
     }),
   ).isRequired,
 };

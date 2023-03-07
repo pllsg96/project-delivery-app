@@ -19,7 +19,7 @@ const create = async (body) => {
     const { userId, sellerId, deliveryAddress, deliveryNumber, products } = body;
     const totalPrice = calculateTotalPrice(products);
   const sale = await Sale.create(
-    { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status: 'Pedido Recebido',
+    { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status: 'Pendente',
     }, { transaction: t },
   );
   const saleId = sale.id;

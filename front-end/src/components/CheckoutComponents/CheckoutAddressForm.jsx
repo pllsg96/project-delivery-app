@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import DeliveryAppContext from '../../context/DeliveryAppContext';
@@ -7,13 +7,20 @@ function CheckoutAddressForm() {
   const { cart, setCart } = useContext(DeliveryAppContext);
   const [deliveryAddress, setDeliveryAddress] = useState('');
   const [deliveryNumber, setDeliveryNumber] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
   const [seller] = useState({ id: 2, name: 'Fulana Pereira' });
   const history = useHistory();
 
+  useEffect(() => {
+    if (deliveryAddress.length === 0 || deliveryNumber.length === 0) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, [deliveryAddress, deliveryNumber]);
+
   const submitOrder = () => {
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(user);
-
     const order = {
       userId: user.id,
       sellerId: seller.id,
@@ -21,11 +28,16 @@ function CheckoutAddressForm() {
       deliveryNumber,
       products: cart,
     };
-    axios.post('http://localhost:3001/checkout', order)
+    console.log(order);
+    axios.post('http://localhost:3001/checkout', order, { headers:
+      {
+        authorization: user.token,
+      },
+    })
       .then((response) => {
         const { id } = response.data;
         setCart([]);
-        history.push(`/orders/${id}`);
+        history.push(`/customer/orders/${id}`);
       })
       .catch((error) => console.log(error));
   };
@@ -58,6 +70,7 @@ function CheckoutAddressForm() {
           type="button"
           data-testid="customer_checkout__button-submit-order"
           onClick={ submitOrder }
+          disabled={ isDisabled }
         >
           Finalizar Pedido
         </button>

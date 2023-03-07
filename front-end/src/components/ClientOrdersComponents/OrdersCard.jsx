@@ -22,12 +22,12 @@ function OrdersCard({ order }) {
       <p
         data-testid={ DATA_TESTID_PRICE + order.id }
       >
-        { order.price }
+        { order.totalPrice }
       </p>
       <p
         data-testid={ DATA_TESTID_DATE + order.id }
       >
-        { order.date }
+        { order.saleDate }
       </p>
     </div>
   );
@@ -37,8 +37,8 @@ OrdersCard.propTypes = {
   order: PropTypes.shape({
     id: PropTypes.number.isRequired,
     status: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    date: PropTypes.string.isRequired,
+    totalPrice: PropTypes.string.isRequired,
+    saleDate: PropTypes.string.isRequired,
   }).isRequired,
 };
 
