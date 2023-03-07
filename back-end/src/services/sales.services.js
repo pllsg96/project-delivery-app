@@ -46,8 +46,8 @@ const getAll = async (id, role) => {
 };
 
 const getById = async (id) => {
-  const sale = await Sale.findByPk(id, {
-    include: ['products'],
+  const sale = await SaleProduct.findByPk(id, {
+    include: ['product', 'sale'],
   });
 
   if (!sale) {
