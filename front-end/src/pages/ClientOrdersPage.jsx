@@ -1,29 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useQuery } from 'react-query';
 import axios from 'axios';
 import Navbar from '../components/NavBar';
 import OrdersContainer from '../components/ClientOrdersComponents/OrdersContainer';
 
 function ClientOrdersPage() {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:3001/sales')
-      .then((res) => {
-        setOrders(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  }, []);
+  const { data, isLoading } = useQuery(
+    ['order', id],
+    async () => axios.get('http://localhost:3001/sales'),
+  );
 
   return (
     <div>
       <Navbar />
-      { loading ? <h1>Loading...</h1> : <OrdersContainer orders={ orders } />}
+      { isLoading ? <h1>Loading...</h1> : <OrdersContainer orders={ data.data } />}
     </div>
   );
 }
