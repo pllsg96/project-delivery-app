@@ -37,6 +37,7 @@ function CheckoutAddressForm() {
       .then((response) => {
         const { id } = response.data;
         setCart([]);
+        localStorage.setItem('cart', JSON.stringify([]));
         history.push(`/customer/orders/${id}`);
       })
       .catch((error) => console.log(error));
