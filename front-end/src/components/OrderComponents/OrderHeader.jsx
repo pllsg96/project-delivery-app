@@ -7,6 +7,17 @@ const DTID_ORDERDATE = 'customer_order_details__element-order-details-label-orde
 const DTID_STATUS = 'customer_order_details__element-order-details-label-delivery-status';
 const DTID_CHECKBUTTON = 'customer_order_details__button-delivery-check';
 
+function dateFormater(date) {
+  const newDate = new Date(date);
+  return newDate.toLocaleDateString('pt-br');
+}
+
+const FOUR = 4;
+
+function padWithLeadingZeros(num, totalLength) {
+  return String(num).padStart(totalLength, '0');
+}
+
 function OrderHeader({ order }) {
   return (
     <div>
@@ -16,7 +27,8 @@ function OrderHeader({ order }) {
       >
         Pedido:
         {' '}
-        { order.sale.id }
+        #
+        { padWithLeadingZeros(order.sale.id, FOUR) }
       </p>
       <p
         data-testid={ DTID_SELLERNAME }
@@ -28,7 +40,7 @@ function OrderHeader({ order }) {
       <p
         data-testid={ DTID_ORDERDATE }
       >
-        { order.sale.saleDate }
+        { dateFormater(order.sale.saleDate) }
       </p>
       <p
         data-testid={ DTID_STATUS }
