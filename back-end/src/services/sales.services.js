@@ -88,4 +88,4 @@ const updateStatus = async (id, status) => {
   return sale;
 };
 
-module.exports = { create, getAll, getById };
+module.exports = { create, getAll, getById, updateStatus };
