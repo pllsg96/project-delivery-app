@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const DTID_ORDERID = 'customer_order_details__element-order-details-label-order-id';
-// const DTID_SELLERNAME = 'customer_order_details__element-order-details-label-seller-name';
+const DTID_SELLERNAME = 'customer_order_details__element-order-details-label-seller-name';
 const DTID_ORDERDATE = 'customer_order_details__element-order-details-label-order-date';
 const DTID_STATUS = 'customer_order_details__element-order-details-label-delivery-status';
 const DTID_CHECKBUTTON = 'customer_order_details__button-delivery-check';
+const DTID_TOTALPRICE = 'customer_order_details__element-order-total-price';
 
 function dateFormater(date) {
   const newDate = new Date(date);
@@ -31,6 +32,11 @@ function OrderHeader({ order }) {
         { padWithLeadingZeros(order.id, FOUR) }
       </p>
       <p
+        data-testid={ DTID_SELLERNAME }
+      >
+        Fulana Pereira
+      </p>
+      <p
         data-testid={ DTID_ORDERDATE }
       >
         { dateFormater(order.saleDate) }
@@ -40,9 +46,17 @@ function OrderHeader({ order }) {
       >
         { order.status }
       </p>
+      <p
+        data-testid={ DTID_TOTALPRICE }
+      >
+        R$
+        {' '}
+        { (Number(order.totalPrice).toFixed(2)).replace('.', ',') }
+      </p>
       <button
         type="button"
         data-testid={ DTID_CHECKBUTTON }
+        disabled={ order.status === 'Pendente' }
       >
         MARCAR COMO ENTREGUE
       </button>
@@ -55,6 +69,7 @@ OrderHeader.propTypes = {
     id: PropTypes.number,
     saleDate: PropTypes.string,
     status: PropTypes.string,
+    totalPrice: PropTypes.string,
   }).isRequired,
 };
 

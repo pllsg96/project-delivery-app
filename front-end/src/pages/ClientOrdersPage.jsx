@@ -6,7 +6,7 @@ import OrdersContainer from '../components/ClientOrdersComponents/OrdersContaine
 
 function ClientOrdersPage() {
   const { data, isLoading } = useQuery(
-    ['order', id],
+    ['order'],
     async () => axios.get('http://localhost:3001/sales'),
   );
 

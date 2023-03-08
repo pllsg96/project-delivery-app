@@ -28,7 +28,6 @@ function CheckoutAddressForm() {
       deliveryNumber,
       products: cart,
     };
-    console.log(order);
     axios.post('http://localhost:3001/checkout', order, { headers:
       {
         authorization: user.token,
@@ -37,7 +36,7 @@ function CheckoutAddressForm() {
       .then((response) => {
         const { id } = response.data;
         setCart([]);
-        localStorage.setItem('cart', JSON.stringify([]));
+        localStorage.removeItem('cart');
         history.push(`/customer/orders/${id}`);
       })
       .catch((error) => console.log(error));

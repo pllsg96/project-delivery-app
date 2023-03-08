@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const DATA_TESTID_ID = 'customer_orders__element-order-id-';
@@ -6,9 +7,17 @@ const DATA_TESTID_STATUS = 'customer_orders__element-delivery-status-';
 const DATA_TESTID_PRICE = 'customer_orders__element-card-price-';
 const DATA_TESTID_DATE = 'customer_orders__element-order-date-';
 
+function dateFormater(date) {
+  const newDate = new Date(date);
+  return newDate.toLocaleDateString('pt-br');
+}
+
 function OrdersCard({ order }) {
   return (
-    <div>
+    <Link
+      to={ `/customer/orders/${order.id}` }
+      style={ { textDecoration: 'none' } }
+    >
       <p
         data-testid={ DATA_TESTID_ID + order.id }
       >
@@ -22,14 +31,16 @@ function OrdersCard({ order }) {
       <p
         data-testid={ DATA_TESTID_PRICE + order.id }
       >
-        { order.totalPrice }
+        R$
+        {' '}
+        { (Number(order.totalPrice).toFixed(2)).replace('.', ',') }
       </p>
       <p
         data-testid={ DATA_TESTID_DATE + order.id }
       >
-        { order.saleDate }
+        { dateFormater(order.saleDate) }
       </p>
-    </div>
+    </Link>
   );
 }
 
