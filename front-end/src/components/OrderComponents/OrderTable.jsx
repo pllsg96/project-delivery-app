@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function OrderTable({ order }) {
+const ONE = 1;
+
+function OrderTable({ products }) {
   return (
-    // < className="order-wrap">
     <table>
       <thead>
         <tr>
@@ -25,32 +26,34 @@ function OrderTable({ order }) {
         </tr>
       </thead>
       <tbody>
-        {
-          order.products.map((product, index) => (
-            <tr key={ index }>
-              <td>{index}</td>
-              <td>{product.name}</td>
-              <td>{product.quantity}</td>
-              <td>{product.price}</td>
-              <td>{Number(product.quantity * product.price).toFixed(2)}</td>
-            </tr>
-          ))
-        }
+        { products.map((product, index) => (
+          <tr key={ index }>
+            <td>{ +(index) + ONE }</td>
+            <td>{ product.name }</td>
+            <td>{ product.quantity }</td>
+            <td>
+              R$
+              {' '}
+              { (Number(product.price).toFixed(2)).replace('.', ',') }
+            </td>
+            <td>
+              R$
+              {' '}
+              { (Number(product.quantity * product.price).toFixed(2)).replace('.', ',') }
+            </td>
+          </tr>
+        )) }
       </tbody>
     </table>
   );
 }
 
 OrderTable.propTypes = {
-  order: PropTypes.shape({
-    products: PropTypes.shape([{
-      id: PropTypes.number,
-      name: PropTypes.string,
-      price: PropTypes.string,
-      quantity: PropTypes.number,
-      urlImage: PropTypes.string,
-    }]),
-  }).isRequired,
+  products: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    quantity: PropTypes.number,
+    price: PropTypes.string,
+  })).isRequired,
 };
 
 export default OrderTable;

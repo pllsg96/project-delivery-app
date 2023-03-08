@@ -15,13 +15,11 @@ function OrderPage() {
     async () => axios.get(`http://localhost:3001/sales/${id}`),
   );
 
-  console.log(data);
-
   return (
     <div>
       <Navbar />
       <h1>Order Page</h1>
-      {isLoading ? (
+      { isLoading ? (
         <Loading />
       ) : (
         <div>
@@ -29,10 +27,10 @@ function OrderPage() {
             order={ data.data }
           />
           <OrderTable
-            order={ data.data }
+            products={ data.data.products }
           />
         </div>
-      )}
+      ) }
     </div>
   );
 }

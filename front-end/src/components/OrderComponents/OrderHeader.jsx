@@ -28,20 +28,17 @@ function OrderHeader({ order }) {
         Pedido:
         {' '}
         #
-        { padWithLeadingZeros(order.sale.id, FOUR) }
+        { padWithLeadingZeros(order.id, FOUR) }
       </p>
       <p
         data-testid={ DTID_ORDERDATE }
       >
-        { dateFormater(order.sale.saleDate) }
+        { dateFormater(order.saleDate) }
       </p>
       <p
         data-testid={ DTID_STATUS }
       >
-        { order.sale.status }
-      </p>
-      <p>
-        { order}
+        { order.status }
       </p>
       <button
         type="button"
@@ -55,11 +52,9 @@ function OrderHeader({ order }) {
 
 OrderHeader.propTypes = {
   order: PropTypes.shape({
-    sale: PropTypes.shape({
-      id: PropTypes.number,
-      saleDate: PropTypes.string,
-      status: PropTypes.string,
-    }),
+    id: PropTypes.number,
+    saleDate: PropTypes.string,
+    status: PropTypes.string,
   }).isRequired,
 };
 
